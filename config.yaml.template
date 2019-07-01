@@ -1,0 +1,17 @@
+tmp_dir: '../tmp'
+tmp_tar_file_path: '/tmp/test-backup.tgz'
+azure_sa_connection_string: 'not-filled'
+paths:
+  - path: /Users/joe/test/googledrive/sports
+    include_extensions:
+      -  '.txt'
+      -  '.md'
+      -  '.png'
+      -  '.pdf'
+  - path: /Users/joe/test/dropbox/technical
+    excludes_subdirs:
+      -  arduino
+    include_extensions:
+      -  '.txt'
+      -  '.pdf'
+    ignore: true

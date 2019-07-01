@@ -1,27 +1,28 @@
-import yaml
+from config_reader import ConfigReader
+from backup import Backup
+from storageprovider.azure_storage_provider import AzureStorageProvider
+
 import logging
 import sys
-import os
 
-logger = logging.getLogger('tar-blob-uploader')
+# set up logger
+verbose_format = logging.Formatter('%(asctime)s - [%(levelname)s] - %(filename)s:%(lineno)d - %(message)s')
+logger = logging.getLogger('cloud-backup-utility')
 logger.setLevel(logging.DEBUG)
-logger.addHandler(logging.StreamHandler(sys.stdout))
+stdout_handler = logging.StreamHandler(sys.stdout)
+stdout_handler.setFormatter(verbose_format)
+logger.addHandler(stdout_handler)
 
-config = None
-with open("../config.yaml", 'r') as stream:
-    try:
-        config = yaml.safe_load(stream)
-    except yaml.YAMLError as ex:
-        logger.exception(ex)
 
-logger.debug(config)
+# backup
+config = ConfigReader.get_config("../config.yaml")
 
-for path_config in config['paths']:
-    if 'ignore' in path_config and path_config['ignore']:
-        continue
-    logger.debug('processing path config: {}'.format(path_config))
-    for root, subdirs, files in os.walk(path_config['path']):
-        logger.debug('root:' + root)
-        # logger.debug('subdirs: {}'.format(subdirs))
-        # logger.debug('files: {}'.format(files))
+storage_provider = AzureStorageProvider(config['azure_sa_connection_string'])
+
+backup = Backup(config, storage_provider=storage_provider)
+backup.get_files_to_copy()
+backup.copy_files_to_tmp_dir(create_only_dirs=False)
+backup.tar_destination_dir()
+backup.upload_to_cloud()
+
 

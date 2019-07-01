@@ -1,0 +1,17 @@
+tmp_dir: '../tmp'
+tmp_tar_file_path: '/tmp/test-backup.tgz'
+azure_sa_connection_string: 'not-filled'
+paths:
+  - path: files/test_backup/sports
+    include_extensions:
+      -  '.txt'
+      -  '.md'
+      -  '.png'
+      -  '.pdf'
+    ignore: True
+  - path: files/test_backup/technical
+    include_extensions:
+      -  '.md'
+      -  '.pdf'
+    ignore: False
+
