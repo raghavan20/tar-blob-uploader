@@ -1,0 +1,14 @@
+paths:
+  - path: /Users/Raghavan/test/googledrive/investing
+    include_extensions:
+      -  '*.txt'
+      -  '*.png'
+      -  '*.pdf'
+  - path: /Users/Raghavan/test/dropbox/technical
+    excludes_subdirs: 
+      -  arduino
+    include_extensions:
+      -  '*.txt'
+      -  '*.pdf'
+    ignore: true
+
