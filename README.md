@@ -25,12 +25,18 @@ Create virtual environment
 
 ## Configuration
 
-The application is configured with `config.yaml`. It is expected to be in application's current working directory. Look at sample `config.yaml.template`
+-    The application is configured with `config.yaml`. It is expected to be in application's current working directory. Look at sample `config.yaml.template`
+-    If using Azure Blob storage, a container named `backup` should be present at the root of Storage Account
 
 
 ## How to execute
 
 Run main.py which tars and uploads to Azure. It is expected to pass valid Azure Storage account connection string in Yaml key `azure_sa_connection_string`.
+
+```
+cd src
+python main.py
+```
 
 Look at [test](test/test_backup.py) for sample usage.
 

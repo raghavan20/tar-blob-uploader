@@ -1,5 +1,16 @@
 from unittest import TestCase
+from config_reader import ConfigReader
 from backup import Backup
+from storageprovider.dummy_storage_provider import DummyStorageProvider
+
+import logging
+import sys
+from shutil import rmtree
+
+# set up logger
+logger = logging.getLogger('tar-blob-uploader')
+logger.setLevel(logging.DEBUG)
+logger.addHandler(logging.StreamHandler(sys.stdout))
 
 
 class TestBackup(TestCase):
@@ -16,19 +27,6 @@ class TestBackup(TestCase):
         self.assertEquals(('/tmp/technical/java', '/tmp/technical/java/notes.md'), actual)
 
     def test_backup(self):
-        from config_reader import ConfigReader
-        from backup import Backup
-        from storageprovider.dummy_storage_provider import DummyStorageProvider
-
-        import logging
-        import sys
-        from shutil import rmtree
-
-        # set up logger
-        logger = logging.getLogger('tar-blob-uploader')
-        logger.setLevel(logging.DEBUG)
-        logger.addHandler(logging.StreamHandler(sys.stdout))
-
         # clean up tmp dir
         rmtree('../tmp', ignore_errors=True)
 
